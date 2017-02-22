@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Sundial. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+		<add id="Sundial_CommunityCommerce::sundial_charity" title="COMMUNITY COMMERCE" module="Sundial_CommunityCommerce"  sortOrder="20" dependsOnModule="Sundial_CommunityCommerce" resource="Sundial_CommunityCommerce::charity"/>
+		<add id="Sundial_CommunityCommerce::sundial_charity_index" title="Manage Causes" module="Sundial_CommunityCommerce"  sortOrder="25" parent="Sundial_CommunityCommerce::sundial_charity" dependsOnModule="Sundial_CommunityCommerce" action="communitycommerce/charity/index" resource="Sundial_CommunityCommerce::manage_causes"/>
+		<add id="Sundial_CommunityCommerce::sundial_charity_report" title="Causes Report" module="Sundial_CommunityCommerce"  sortOrder="30" parent="Sundial_CommunityCommerce::sundial_charity" dependsOnModule="Sundial_CommunityCommerce" action="communitycommerce/charity/report" resource="Sundial_CommunityCommerce::report"/>
+	 <!--AddMenu-->
+    </menu>
+</config>

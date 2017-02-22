@@ -1,0 +1,99 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/* $objectManager = \Magento\Framework\App\ObjectManager::getInstance();//instance of object manager
+$itemModel = $objectManager->create('Magento\Checkout\Model\Cart')->getQuote();
+echo "<pre>";
+print_r($itemModel->getData());
+die;
+echo $itemModel->getQuoteId();
+foreach($itemModel as $itemModel1):
+echo "<pre>";
+print_r($itemModel1->getData());
+endforeach; */
+/* die;
+echo $block->getCharityId(); */
+echo $block->getQuoteId();
+$quoteId = $block->getQuoteId();
+//check this:===============================================
+echo $block->getCharityId($quoteId);
+$charityId = $block->getCharityId($quoteId);
+/* $block->getCharityId($quoteId); */
+if($block->getProductCharityOptions()){
+?>
+<div class="block charity" id="block-charity" data-mage-init='{"collapsible":{"openedState": "active", "saveState": false}}'>
+    <div class="title" data-role="title">
+        <strong id="block-charity-heading" role="heading" aria-level="2"><?php /* @escapeNotVerified */ echo __('Select Cause For Community Commerce') ?></strong>
+    </div>
+    <div class="content" data-role="content" aria-labelledby="block-charity-heading">
+        <form id="charity-form"
+              action="<?php /* @escapeNotVerified */ echo $block->getUrl('communitycommerce/charity/charity') ?>"
+              method="post"
+              data-mage-init='{"charity":{"appyCharitySelector": "#charity_id",
+                                               "removeCharitySelector": "#remove-charity",
+                                               "applyCharityButton": "button.action.charity",
+                                               "cancelCharityButton": "button.action.charitycancel"}}'>
+            <div class="fieldset coupon <?php if($block->getCharityId($quoteId)){ echo 'applied';}?>">
+            <input type="hidden" name="remove" id="remove-charity" value="0" />
+			<?php //echo $block->getBlockHtml('formkey') ?>
+                <div class="field">
+                    <div class="control">
+						 <select id="charity_id" name="charity_id">
+							<?php foreach ($block->getAllCharity() as $charity): ?>
+								<option value="<?php /* @escapeNotVerified */ echo $charity['id'] ?>" <?php if($charity['id'] == $block->getCharityId($quoteId)){ echo "selected"; } ?> ><?php /* @escapeNotVerified */ echo $charity['charity_name']; ?></option>
+							<?php endforeach; ?>
+						  </select>
+                    </div>
+                </div>
+                <div class="actions-toolbar">
+                    <?php if($block->getCharityId($quoteId)){ ?>
+					<?php $Details =  $block->getCharityDetails($charityId); ?>
+					<!--Start charity Information -->
+						<div class="charity-details ">
+							<a href="javascript:void(0)" id="CHToggle">VIEW MORE</a>
+							<div class="CHInfo CHhide">
+								<div class="charity-div-title">
+									<span class="charity-left-title">Cause Name : </span>	 
+									<span class="charity-right-title"><?php echo $Details->getCharityName();?><span>
+								</div>
+								<div class="charity-div-desc">
+									<span class="charity-left-desc">Cause Description : </span>	 
+									<span class="charity-right-desc"><?php echo $Details->getDescription();?><span>
+								</div>
+							</div>
+						</div>
+					<!--end charity Information -->
+                        <div class="primary">
+                            <button  type="button" class="action charitycancel primary" value="<?php /* @escapeNotVerified */ echo __('Cancel Cause') ?>"><span><?php /* @escapeNotVerified */ echo __('Cancel Cause') ?></span></button>
+                        </div>
+                    <?php } ?>
+					<div class="primary">
+                        <button class="action charity primary" type="button" value="<?php /* @escapeNotVerified */ echo __('Apply Cause') ?>">
+                            <span><?php /* @escapeNotVerified */ echo __('Apply Cause') ?></span>
+                        </button>
+                    </div>
+                    <?php //endif; ?>
+                </div>
+            </div>
+        </form>			
+    </div>
+	
+</div>
+<script>
+    require([
+        'jquery'
+    ], function($){
+    	$('#CHToggle').on('click', function(e){
+			e.preventDefault();
+			$('.CHInfo').toggleClass('CHhide');
+		});
+      });
+ </script>
+<?php } ?>
